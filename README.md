@@ -1,1 +1,1 @@
-### C Assignments from first year University of Galway
+### Example C Assignments from first year University of Galway
