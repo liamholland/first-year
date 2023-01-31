@@ -1,2 +1,3 @@
-# first-year-projects
-This repo consists of my best first year projects and assignments
+### University of Galway First Year 
+- This repo consists of first year projects and assignments
+- Includes research and theory and also practical code
