@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        let vv = 1;
+        let hv = 1;
+        let currv = 200;
+        let currh = 200;
+        function bounce(){
+            currh += hv;
+            currv += vv;
+            
+            document.getElementById("theBall").style.left = `${currh}px`;
+            document.getElementById("theBall").style.top = `${currv}px`;
+
+            if(currh >= 600 || currh <= 0){
+                hv = -hv;
+            }
+    
+            if(currv >= 600 || currv <= 0){
+                vv = -vv;
+            }
+
+            window.setTimeout(bounce, 20);
+        }
+    </script>
+</head>
+
+<body onload="bounce();">
+    <div style='position:absolute; left:0px; top:0px; width:600px; height:600px; background:#00FF00'>
+        <div style='position:absolute; left:200px; top:200px' id='theBall'>
+            <img src='images/ball.png'>
+        </div>
+    </div>
+</body>
+
+</html>
