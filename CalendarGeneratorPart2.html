@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="CalendarStyle.css">
+    <script>
+        var initDay;    //variable for holding the starting day
+        var numDays;    //variable for holding the number of days
+        var date = new Date();
+        var today = date.getDate();
+
+        //functions for gathering and verifying the user input
+        function getStartDay() {
+            let d = 0;
+            let m = +(document.getElementById("monthI").value);
+            let y = +(document.getElementById("yearI").value);
+
+            for(let i = 0; i < (y - 1900); i++){
+                d += 365 + is_leap(1900 + i);
+            }
+
+            for(let i = 1; i < m; i++){
+                d += months(i, y);
+            }
+
+            initDay = (1 + d) % 7;
+
+            if (isNaN(initDay) || initDay > 6 || initDay < 0) {
+                alert("Invalid Day. Try Again");
+                return;
+            }
+
+            getNumDays(m, y);
+        }
+
+        function getNumDays(m, y){
+            numDays = months(m, y);
+            if (isNaN(numDays) || numDays > 31 || numDays < 28) {
+                alert("Invalid Number of Days. Try Again");
+                return;
+            }
+
+            generate();
+        }
+
+        function months(month, year){
+            if(month === 9 || month === 4 || month === 6 || month === 11){
+                return 30;
+            }
+            else if(month === 2){
+                return (is_leap(year) + 28);
+            }
+            else
+                return 31;
+        }
+
+        function is_leap(year) {
+			if(year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
+                return 1;
+            else
+                return 0;
+		}
+
+        //function for generating the calendar
+        function generate() {
+            let currDay = numDays;  //this variable is used to generate the content of the numbered days as well as track when all the days are added
+            let rows = ((initDay + numDays) + (7 - (initDay + numDays) % 7)) / 7;   //the number of rows is calculated here
+
+            //adds the start of the table and the first row which contains the names of the days
+            let c = "<table><tr><td class='dayName'>Sunday</td><td class='dayName'>Monday</td><td class='dayName'>Tuesday</td><td class='dayName'>Wednesday</td><td class='dayName'>Thursday</td><td class='dayName'>Friday</td><td class='dayName'>Saturday</td></tr>";
+
+            //generating the rows of days
+            for (let i = 0; i < rows && currDay != 0; i++) {    //the currDay condition here ensures that a full empty row wont be added in certain conditions
+                c += "<tr>";
+                for (let j = 0; j < 7; j++) {
+                    if (currDay <= 0 || initDay > 0) {
+                        c += `<td class="empty"></td>`; //adds empty squares if the numbered days have all been added
+                        if (initDay > 0) initDay--; //initDay is decremented if there are still empty spaces to add at the start
+                    }
+                    else {
+                        let num = (numDays - currDay) + 1;  //the number for each square
+                        c += `<td class=${(num == today) ? "dayToday" : "dayNumber"}>${num}</td>`;  //adds a different style to the day that corresponds to todays date
+                        currDay--;
+                    }
+                }
+                c += "</tr>"; //ends each row
+            }
+            c += "</table>";    //end of the table
+            document.getElementById("calendar").innerHTML = c;  //sets the html of the div
+        }
+    </script>
+</head>
+
+<body>
+    Enter the year <input type="text" id="yearI"><br>
+    Enter the month <input type="text" id="monthI"><br>
+    <button onclick="getStartDay();">Generate</button>
+    <div id="calendar"></div>
+</body>
+
+</html>
