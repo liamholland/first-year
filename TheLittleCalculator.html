@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            function maths(c){
+                var num1 = parseInt(document.getElementById("t1").value);
+                var num2 = parseInt(document.getElementById("t2").value);
+                var result;
+                var out = document.getElementById("d1");
+                if(!isNaN(num1) && !isNaN(num2)){
+                    out.innerHTML = "";
+                    switch(c){
+                        case '+':
+                            result = num1 + num2;
+                            break;
+                        case '-':
+                            result = num1 - num2;
+                            break;
+                        case '*':
+                            result = num1 * num2;
+                            break;
+                        case '/':
+                            result = num1 / num2;
+                            break;
+                        default:
+                            break;
+                    }
+                    out.innerHTML = num1 + c + num2 + "=" + result;
+                }
+                else
+                    out.innerHTML = "One of those isn't a number";
+            }
+        </script>
+    </head>
+    <body>
+        <center>
+            <h1>The Little Calculator</h1>
+            <input type="text" id="t1">
+            <input type="text" id="t2"><br>
+            <button id="b1" onclick="maths('+');">+</button>
+            <button id="b2" onclick="maths('-');">-</button>
+            <button id="b3" onclick="maths('*');">*</button>
+            <button id="b4" onclick="maths('/');">/</button>
+            <div id="d1">Output will go here</div>
+        </center>
+    </body>
+</html>
