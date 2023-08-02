@@ -12,11 +12,11 @@ Date: 18-01-22
 int shipX, shipY;
 int gridSize = 9;	//grid size set to 9 as the last digit of my ID is 1
 
-void randomSearch(int gs);					//random search function
-void gridSearch(int gs, int posChecked);	//sequential search function
-void printGrid(int gs);						//print out the grid along with the location of the ship
+int randomSearch(int gs);					//random search function
+int gridSearch(int gs, int posChecked);	//sequential search function
+int printGrid(int gs);						//print out the grid along with the location of the ship
 
-void main() {
+int main() {
 	//initialise the coordinates of the ship
 	srand(time(NULL) * (gridSize - 1));
 	shipX = rand() % gridSize;
@@ -29,9 +29,11 @@ void main() {
 	gridSearch(gridSize, 0);
 
 	printGrid(gridSize);
+
+	return 0;
 }
 
-void randomSearch(int gs) {
+int randomSearch(int gs) {
 	int x = 0, y = 0, i = 0;
 	srand(time(NULL) * (gs));
 
@@ -42,13 +44,16 @@ void randomSearch(int gs) {
 		if (y != shipY)
 			y = rand() % gs;
 		i++;
+
 	}
 
 	printf("Ship found after %d locations!\n", i);
 	printf("The ship coordinates were (%d, %d)\n", x, y);
+
+	return 0;
 }
 
-void gridSearch(int gs, int posChecked) {
+int gridSearch(int gs, int posChecked) {
 	int x = posChecked % gs;		//gets the x coordinate between 0 and gridSize - 1
 	int y = (posChecked - x) / gs;	//gets the y coordinate.In an nxn grid, the y will be the number of positions checked, minus the x coordinate (excess) divided by the grid size
 
@@ -60,9 +65,21 @@ void gridSearch(int gs, int posChecked) {
 	else {
 		gridSearch(gs, posChecked + 1);	//recursion
 	}
+
+	return 0;
 }
 
-void printGrid(int gs) {
+int printGrid(int gs) {
+	//print the x labels
+	printf(" ");
+	for(int i = 0; i < gs; i++){
+		printf("%d", i);
+		if(i < 10){
+			printf(" ");
+		}
+	}
+	printf("\n");
+
 	for (int i = gs; i > 0; i--) {
 		for (int j = gs; j > 0; j--) {
 			//checks if the currently printing position matches the coordinates of the ship
@@ -75,6 +92,8 @@ void printGrid(int gs) {
 			else
 				printf("|_");
 		}
-		printf("|\n");	//adds the missing line at the end of each row
+		printf("|");	//adds the missing line at the end of each row
+		printf("%d\n", i-1);	//adds the y label
 	}
+	return 0;
 }
